@@ -1,9 +1,10 @@
 import { NextResponse,NextRequest } from "next/server";
 import { signUpSchema } from "@/lib/schemaValidators";
+import { hashPassword } from "@/utils/hash";
 import prisma from "@/lib/prisma";
 
 
-export const Post = async (req: NextRequest) => {
+export const POST = async (req: NextRequest): Promise<NextResponse> => {
     try{
         const body = await req.json()
         const isValidData = signUpSchema.safeParse(body);
@@ -18,14 +19,15 @@ export const Post = async (req: NextRequest) => {
         if(existingUser){
             return NextResponse.json({error: "User already exists"}, {status: 400})
         }
+        const hashedpassword = await hashPassword(body.password, 10);
         const newuser = await prisma.user.create({
             data:{
                 email: body.email,
-                password: body.password,
+                password: hashedpassword,
                 name: body.name
             }
         })
-        return NextResponse.json({message: "User created successfully", user: newuser}, {status: 201})
+        return NextResponse.json({message: "User created successfully", user: {email: newuser.email, name: newuser.name}}, {status: 201})
     }catch(e){
         return NextResponse.json({error: "Internal server error"}, {status: 500})
     }
