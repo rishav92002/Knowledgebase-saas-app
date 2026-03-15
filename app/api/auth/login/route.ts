@@ -21,7 +21,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         if (!isPasswordValid) {
             return NextResponse.json({error: "Invalid email or password"}, {status: 400});
         }
-        const jwtToken = generateToken({userId: user.id, email: user.email}, process.env.SECRET_KEY as string, "5h");
+        const jwtToken = await generateToken({userId: user.id, email: user.email}, process.env.SECRET_KEY as string, "5h");
         const response = NextResponse.json({message: "Login successful"}, {status: 200});
         response.cookies.set("token", jwtToken, {
             httpOnly: true,

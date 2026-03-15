@@ -3,20 +3,19 @@ import type { NextRequest } from "next/server";
 import { verifyToken } from "@/utils/token";
 
 
-export const authMiddleware = async (req: NextRequest): Promise<NextResponse> => {
+const authMiddleware = async (req: NextRequest): Promise<NextResponse> => {
     try {
         const token = req.cookies.get("token")?.value;
         console.log("Auth Middleware: Checking token", { token });
         if (!token) {
             return NextResponse.redirect(new URL("/login", req.url));
         }
-        const isTokenValid = await verifyToken(token, process.env.SECRET_KEY as string);
-        console.log("Auth Middleware: Checking token", { isTokenValid });
-        if (!isTokenValid) {
+        const decoded = await verifyToken(token, process.env.SECRET_KEY as string);
+        if (!decoded) {
             return NextResponse.redirect(new URL("/login", req.url));
         }
         const requestHeaders = new Headers(req.headers);
-        requestHeaders.set("x-user-id", isTokenValid.userId);
+        requestHeaders.set("x-user-id", decoded.userId);
         return NextResponse.next({
             request: { headers: requestHeaders },
         });
@@ -27,3 +26,4 @@ export const authMiddleware = async (req: NextRequest): Promise<NextResponse> =>
 export const config = {
   matcher: ["/api/workflow/:path*"]
 };
+export default authMiddleware;

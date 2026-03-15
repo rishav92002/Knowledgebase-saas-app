@@ -13,5 +13,27 @@ model User {
   email String @unique
   password String 
   name String?
+  workspaces  Workspace[]
   createdAt DateTime @default(now())
+}
+model Workspace {
+  id String @id @default(cuid())
+  name String @unique
+  userId  String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  updatedAt   DateTime @updatedAt
+  documents Document[]
+}
+
+model Document {
+  id String @id @default(cuid())
+  name String @unique
+  title String
+  content String?
+  workspaceId String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id])
 }

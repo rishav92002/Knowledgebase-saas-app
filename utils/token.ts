@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import { SignJWT, jwtVerify } from 'jose';
 
 export interface JwtPayload {
     userId: string;
@@ -9,14 +9,21 @@ export interface JwtPayload {
 
 type TokenPayload = Omit<JwtPayload, "iat" | "exp">;
 
-export const generateToken = (payload: TokenPayload, secretKey: string, expiresIn: jwt.SignOptions["expiresIn"]): string => {
-    return jwt.sign(payload, secretKey, { expiresIn });
-}
+export const generateToken = async (payload: TokenPayload, secretKey: string, expiresIn: string): Promise<string> => {
+    return new SignJWT({ ...payload })
+        .setProtectedHeader({ alg: 'HS256' })
+        .setIssuedAt()
+        .setExpirationTime(expiresIn)
+        .sign(new TextEncoder().encode(secretKey));
+};
 
-export const verifyToken = (token: string, secretKey: string): JwtPayload | null => {
+export const verifyToken = async (token: string, secretKey: string): Promise<JwtPayload | null> => {
     try {
-        return jwt.verify(token, secretKey) as JwtPayload;
+        const { payload } = await jwtVerify(token, new TextEncoder().encode(secretKey), {
+            algorithms: ['HS256'],
+        });
+        return payload as unknown as JwtPayload;
     } catch {
         return null;
     }
-}
+};
