@@ -1,22 +1,141 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f9fafb;
+  --foreground: #111827;
+
+  --surface: #ffffff;
+  --surface-hover: #f3f4f6;
+  --surface-active: #e5e7eb;
+
+  --sidebar-bg: #ffffff;
+  --sidebar-text: #374151;
+  --sidebar-text-muted: #9ca3af;
+  --sidebar-hover: #f3f4f6;
+  --sidebar-active: #eff6ff;
+  --sidebar-active-text: #2b6cee;
+  --sidebar-border: #e5e7eb;
+
+  --topbar-bg: #ffffff;
+  --topbar-border: #e5e7eb;
+
+  --primary: #2b6cee;
+  --primary-hover: #2459c9;
+  --primary-text: #ffffff;
+
+  --border: #e5e7eb;
+  --border-light: #f3f4f6;
+
+  --muted: #6b7280;
+  --muted-light: #9ca3af;
+
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+  --card-hover: #f9fafb;
+
+  --input-bg: #f9fafb;
+  --input-border: #d1d5db;
+  --input-focus: #2b6cee;
+  --input-text: #111827;
+  --input-placeholder: #9ca3af;
+
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --success: #22c55e;
+  --warning: #f59e0b;
+}
+
+.dark {
+  --background: #0f1117;
+  --foreground: #e5e7eb;
+
+  --surface: #1a1d27;
+  --surface-hover: #252836;
+  --surface-active: #2f3344;
+
+  --sidebar-bg: #141620;
+  --sidebar-text: #d1d5db;
+  --sidebar-text-muted: #6b7280;
+  --sidebar-hover: #1e2130;
+  --sidebar-active: #1e293b;
+  --sidebar-active-text: #5b9aff;
+  --sidebar-border: #252836;
+
+  --topbar-bg: #141620;
+  --topbar-border: #252836;
+
+  --primary: #5b9aff;
+  --primary-hover: #4a88ee;
+  --primary-text: #ffffff;
+
+  --border: #252836;
+  --border-light: #1e2130;
+
+  --muted: #9ca3af;
+  --muted-light: #6b7280;
+
+  --card-bg: #1a1d27;
+  --card-border: #252836;
+  --card-hover: #1e2130;
+
+  --input-bg: #1a1d27;
+  --input-border: #374151;
+  --input-focus: #5b9aff;
+  --input-text: #e5e7eb;
+  --input-placeholder: #6b7280;
+
+  --danger: #f87171;
+  --danger-hover: #ef4444;
+  --success: #4ade80;
+  --warning: #fbbf24;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-surface-active: var(--surface-active);
+
+  --color-sidebar-bg: var(--sidebar-bg);
+  --color-sidebar-text: var(--sidebar-text);
+  --color-sidebar-text-muted: var(--sidebar-text-muted);
+  --color-sidebar-hover: var(--sidebar-hover);
+  --color-sidebar-active: var(--sidebar-active);
+  --color-sidebar-active-text: var(--sidebar-active-text);
+  --color-sidebar-border: var(--sidebar-border);
+
+  --color-topbar-bg: var(--topbar-bg);
+  --color-topbar-border: var(--topbar-border);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-text: var(--primary-text);
+
+  --color-border: var(--border);
+  --color-border-light: var(--border-light);
+
+  --color-muted: var(--muted);
+  --color-muted-light: var(--muted-light);
+
+  --color-card-bg: var(--card-bg);
+  --color-card-border: var(--card-border);
+  --color-card-hover: var(--card-hover);
+
+  --color-input-bg: var(--input-bg);
+  --color-input-border: var(--input-border);
+  --color-input-focus: var(--input-focus);
+  --color-input-text: var(--input-text);
+  --color-input-placeholder: var(--input-placeholder);
+
+  --color-danger: var(--danger);
+  --color-danger-hover: var(--danger-hover);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {

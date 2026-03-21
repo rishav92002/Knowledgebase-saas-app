@@ -24,6 +24,6 @@ const authMiddleware = async (req: NextRequest): Promise<NextResponse> => {
     }
 };
 export const config = {
-  matcher: ["/api/workflow/:path*", '/api/document/:path*'],
+  matcher: ["/api/workflow/:path*", '/api/document/:path*', '/api/auth/user'],
 };
 export default authMiddleware;
