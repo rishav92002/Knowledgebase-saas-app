@@ -1,21 +1,18 @@
 "use client";
-import React, {useState} from 'react'
+
+import React, { useState } from "react";
+import Link from "next/link";
 import { MenuItems } from "./menuHelper";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Icons } from "@/utils/icon";
 import { useTheme } from "@/context/ThemeContext";
 
-import Settings from '../Settings/Settings';
+import Settings from "../Settings/Settings";
 
 const Menu = () => {
-  const [showSettings, setShowSettings] = useState(false)
-  const router = useRouter();
+  const [showSettings, setShowSettings] = useState(false);
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
-
-  function menuClick(item: string) {
-    router.push(`/dashboard/${item}`);
-  }
 
   function isActive(url: string): boolean {
     const fullPath = `/dashboard/${url}`;
@@ -25,32 +22,32 @@ const Menu = () => {
   return (
     <div className="flex flex-col justify-between h-full">
       <div className="flex flex-col gap-6">
-        <div
-          className="flex gap-2 items-center cursor-pointer px-2 py-2"
-          onClick={() => menuClick(MenuItems[0].url)}
+        <Link
+          href={`/dashboard/${MenuItems[0].url}`}
+          className="flex gap-2 items-center px-2 py-2"
         >
           <div className="text-primary">{MenuItems[0].icon({ size: 24 })}</div>
           <span className="text-lg font-semibold text-foreground">
             KnowledgeBase
           </span>
-        </div>
+        </Link>
         <div className="flex flex-col gap-1">
           {MenuItems.map((item, i) => {
             if (i === 0) return null;
             const active = isActive(item.url);
             return (
-              <div
+              <Link
                 key={item.title}
-                className={`flex gap-3 items-center cursor-pointer px-3 py-2 rounded-lg transition-colors ${
+                href={`/dashboard/${item.url}`}
+                className={`flex gap-3 items-center px-3 py-2 rounded-lg transition-colors ${
                   active
                     ? "bg-sidebar-active text-sidebar-active-text"
                     : "text-sidebar-text hover:bg-sidebar-hover"
                 }`}
-                onClick={() => menuClick(item.url)}
               >
                 <div>{item.icon({ size: 20 })}</div>
                 <span className="text-sm font-medium">{item.title}</span>
-              </div>
+              </Link>
             );
           })}
         </div>

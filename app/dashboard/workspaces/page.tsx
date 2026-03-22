@@ -1,32 +1,10 @@
-
-import { cookies } from "next/headers";
-import { verifyToken } from "@/utils/token";
 import prisma from "@/lib/prisma";
-import CreateWorkspace from "@/components/CreateWorkspace/CreateWorkspace"
-import { redirect } from "next/navigation";
+import { getAuth } from "@/lib/auth";
+import CreateWorkspace from "@/components/CreateWorkspace/CreateWorkspace";
 import WorkspacesCard from "@/components/Cards/WorkspacesCard";
 
-export default async function Workspaces(){
-    const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
-
-  if (!token) {
-    redirect("/login");
-  }
-
-  const decoded = await verifyToken(token, process.env.SECRET_KEY as string);
-  if (!decoded) {
-    redirect("/login");
-  }
-
-  const user = await prisma.user.findUnique({
-    where: { id: decoded.userId },
-    select: { id: true, name: true, email: true },
-  });
-
-  if (!user) {
-    redirect("/login");
-  }
+export default async function Workspaces() {
+  const { decoded } = await getAuth();
 
     const workspaces = await prisma.workspace.findMany({
       where: { userId: decoded.userId },
