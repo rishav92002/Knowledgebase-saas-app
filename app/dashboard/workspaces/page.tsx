@@ -28,7 +28,7 @@ export default async function Workspaces() {
             {
                 workspaces.map((val,i)=>{
                     return(
-                        <WorkspacesCard id= {val.id} name={val.name} updatedAt={val.updatedAt} documentCount= {val._count.documents}/>
+                        <WorkspacesCard key= {val.id} id= {val.id} name={val.name} updatedAt={val.updatedAt} documentCount= {val._count.documents}/>
                     )
                 })
             }
