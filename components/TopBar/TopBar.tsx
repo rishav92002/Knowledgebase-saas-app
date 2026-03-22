@@ -21,7 +21,7 @@ const TopBar = () => {
     axios.get('/api/auth/user').then((res)=>{
         setUser(()=> res?.data?.user)
     }).catch((error)=>{
-
+       
     })
   },[])
 
@@ -43,17 +43,17 @@ const TopBar = () => {
         />
       </div>
       <div className="flex items-center gap-3">
-        <button
+        {/* <button
           onClick={toggleTheme}
           className="p-2 rounded-lg text-muted hover:bg-surface-hover transition-colors cursor-pointer"
         >
           {theme === "light"
             ? Icons.moon({ size: 20 })
             : Icons.sun({ size: 20 })}
-        </button>
-        <button className="p-2 rounded-lg text-muted hover:bg-surface-hover transition-colors cursor-pointer">
+        </button> */}
+        {/* <button className="p-2 rounded-lg text-muted hover:bg-surface-hover transition-colors cursor-pointer">
           {Icons.bell({ size: 20 })}
-        </button>
+        </button> */}
         <div className="relative group">
           <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-text text-sm font-medium cursor-pointer">
             {user?.name ? getNameShortForm().toUpperCase() : ""}

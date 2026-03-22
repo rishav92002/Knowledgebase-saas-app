@@ -1,11 +1,14 @@
 "use client";
-
+import React, {useState} from 'react'
 import { MenuItems } from "./menuHelper";
 import { useRouter, usePathname } from "next/navigation";
 import { Icons } from "@/utils/icon";
 import { useTheme } from "@/context/ThemeContext";
 
+import Settings from '../Settings/Settings';
+
 const Menu = () => {
+  const [showSettings, setShowSettings] = useState(false)
   const router = useRouter();
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
@@ -54,12 +57,15 @@ const Menu = () => {
       </div>
 
       <div className="flex flex-col gap-1 pb-2">
-        <div
-          className="flex gap-3 items-center cursor-pointer px-3 py-2 rounded-lg text-sidebar-text hover:bg-sidebar-hover transition-colors"
-          onClick={() => menuClick("settings")}
-        >
-          <div>{Icons.settings({ size: 20 })}</div>
-          <span className="text-sm font-medium">Settings</span>
+        <div className="relative">
+          {showSettings && <Settings />}
+          <div
+            className="flex gap-3 items-center cursor-pointer px-3 py-2 rounded-lg text-sidebar-text hover:bg-sidebar-hover transition-colors"
+            onClick={() => setShowSettings((prev) => !prev)}
+          >
+            <div>{Icons.settings({ size: 20 })}</div>
+            <span className="text-sm font-medium">Settings</span>
+          </div>
         </div>
         <div
           className="flex gap-3 items-center cursor-pointer px-3 py-2 rounded-lg text-sidebar-text hover:bg-sidebar-hover transition-colors"

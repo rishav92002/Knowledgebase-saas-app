@@ -157,4 +157,10 @@ export const Icons = {
       '<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>',
       { ...defaultProps, ...p }
     ),
+
+  moreVertical: (p: IconProps = {}) =>
+    svg(
+      '<circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/>',
+      { ...defaultProps, strokeWidth: 0, ...p, }
+    ),
 };

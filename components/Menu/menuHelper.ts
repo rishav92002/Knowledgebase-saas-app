@@ -18,6 +18,11 @@ export const MenuItems = [
         url: 'workspaces'
     },
     {
+        icon: Icons?.document,
+        title: 'Documents',
+        url: 'documents'
+    },
+    {
         icon: Icons?.recent,
         title: 'Recent',
         url: 'recent'
