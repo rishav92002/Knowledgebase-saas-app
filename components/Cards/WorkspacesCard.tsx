@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Icons } from "@/utils/icon";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface WorkspacesCardProps {
   id: string;
@@ -96,6 +97,7 @@ const WorkspacesCard = ({
     }
   };
   return (
+    
     <div
       className="bg-card-bg border border-card-border rounded-xl overflow-hidden hover:shadow-xl hover:border-primary/30 transition-all cursor-pointer group w-56"
       onClick={() => onClick?.(id)}
@@ -240,6 +242,8 @@ const WorkspacesCard = ({
         </div>
       )}
     </div>
+    
+    
   );
 };
 

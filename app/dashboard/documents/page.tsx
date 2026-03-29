@@ -1,5 +1,5 @@
 
 
-export default function Favourites(){
+export default function Documents(){
     return <div>Hello favourites</div>
 }
