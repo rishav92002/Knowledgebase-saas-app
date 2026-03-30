@@ -11,7 +11,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         if (!userId) {
             return NextResponse.json({ error: "User ID is required" }, { status: 400 });
         }
-        if (!workspaceName || workspaceName.trim() === "" || !name || name.trim() === "" || !content || content.trim() === "") {
+        if (!workspaceName || workspaceName.trim() === "" || !name || name.trim() === "" ) {
             return NextResponse.json({ error: "All fields are required" }, { status: 400 });
         }
 

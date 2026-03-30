@@ -168,7 +168,14 @@ const WorkspacesCard = ({
         </div>
 
         <div className="mt-5 flex items-center justify-end">
-          <button
+          <Link
+            href={`/dashboard/workspaces/${id}`}
+            onClick={(e) => e.stopPropagation()}
+            className="bg-surface-hover hover:bg-primary hover:text-white text-foreground px-4 py-1.5 rounded-lg text-sm font-semibold transition-all"
+          >
+            Open
+          </Link>
+          {/* <button
             onClick={(e) => {
               e.stopPropagation();
               onClick?.(id);
@@ -176,7 +183,7 @@ const WorkspacesCard = ({
             className="bg-surface-hover hover:bg-primary hover:text-white text-foreground px-4 py-1.5 rounded-lg text-sm font-semibold transition-all cursor-pointer"
           >
             Open
-          </button>
+          </button> */}
         </div>
       </div>
 

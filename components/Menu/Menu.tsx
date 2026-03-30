@@ -16,6 +16,7 @@ const Menu = () => {
 
   function isActive(url: string): boolean {
     const fullPath = `/dashboard/${url}`;
+    const [basePath] = pathname.split("/").slice(0, 3).join("/").split("?"); // Get the base path without query params
     return pathname === fullPath || (url === "" && pathname === "/dashboard");
   }
 
