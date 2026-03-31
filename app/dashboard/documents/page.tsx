@@ -15,6 +15,7 @@ export default async function Documents() {
         title: true,
         content: true,
         workspaceId: true,
+        isFavourite: true,
         updatedAt: true,
         workspace: {
           select: { name: true },
@@ -55,6 +56,7 @@ export default async function Documents() {
               workspaceId={doc.workspaceId}
               workspaceName={doc.workspace.name}
               updatedAt={doc.updatedAt}
+              isFavourite={doc.isFavourite}
             />
           ))}
         </div>

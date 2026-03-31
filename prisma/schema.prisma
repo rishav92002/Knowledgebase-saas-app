@@ -32,6 +32,7 @@ model Document {
   title String?
   content String?
   workspaceId String
+  isFavourite Boolean @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

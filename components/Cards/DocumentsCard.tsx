@@ -14,6 +14,7 @@ interface DocumentsCardProps {
   workspaceId: string;
   workspaceName?: string;
   updatedAt: Date;
+  isFavourite?: boolean;
 }
 
 function timeAgo(date: Date): string {
@@ -45,11 +46,13 @@ const DocumentCard = ({
   workspaceId,
   workspaceName,
   updatedAt,
+  isFavourite: initialFavourite = false,
 }: DocumentsCardProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [renameOpen, setRenameOpen] = useState(false);
   const [newName, setNewName] = useState(name);
   const [isRenaming, setIsRenaming] = useState(false);
+  const [isFavourite, setIsFavourite] = useState(initialFavourite);
   const [error, setError] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -97,8 +100,21 @@ const DocumentCard = ({
     }
   };
 
+  const handleToggleFavourite = async () => {
+    const next = !isFavourite;
+    setIsFavourite(next);
+    try {
+      await axios.patch("/api/document", { isFavourite: next }, {
+        headers: { documentId: id },
+      });
+      router.refresh();
+    } catch {
+      setIsFavourite(!next);
+    }
+  };
+
   return (
-    <div className="w-full bg-card-bg border border-card-border rounded-xl overflow-hidden hover:shadow-lg hover:border-primary/30 transition-all group">
+    <div className="w-full bg-card-bg border border-card-border rounded-xl overflow-visible hover:shadow-lg hover:border-primary/30 transition-all group">
       <div className="p-5">
         {/* Header row */}
         <div className="flex items-start justify-between gap-3">
@@ -107,10 +123,17 @@ const DocumentCard = ({
               {Icons.document({ size: 20 })}
             </div>
             <div className="min-w-0">
-              <h3 className="text-base font-semibold text-foreground truncate" title={name}>
-                {name}
-              </h3>
+              <div className="flex items-center gap-1.5">
+                <h3 className="text-base font-semibold text-foreground truncate" title={name}>
+                  {name}
+                </h3>
+                {isFavourite && (
+                  <span className="text-warning shrink-0">
+                    {Icons.favourite({ size: 14 })}
+                  </span>
+                )}
               </div>
+            </div>
           </div>
 
           {/* 3-dot menu */}
@@ -126,7 +149,7 @@ const DocumentCard = ({
             </button>
 
             {menuOpen && (
-              <div className="absolute right-0 top-9 w-36 bg-surface border border-border rounded-xl shadow-lg p-1 z-10">
+              <div className="absolute right-0 top-9 w-36 bg-surface border border-border rounded-xl shadow-lg p-1 z-30">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -138,6 +161,17 @@ const DocumentCard = ({
                 >
                   {Icons.edit({ size: 15 })}
                   Rename
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setMenuOpen(false);
+                    handleToggleFavourite();
+                  }}
+                  className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-foreground hover:bg-surface-hover transition-colors cursor-pointer text-sm"
+                >
+                  {Icons.favourite({ size: 15 })}
+                  {isFavourite ? "Unfavourite" : "Favourite"}
                 </button>
                 <button
                   onClick={(e) => {

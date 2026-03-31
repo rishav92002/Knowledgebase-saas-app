@@ -85,12 +85,13 @@ export const PATCH = async (req: NextRequest): Promise<NextResponse> => {
             return NextResponse.json({ error: "document ID is required" }, { status: 400 });
         }
         const body = await req.json();
-        const { name, title, content } = body;
+        const { name, title, content, isFavourite } = body;
 
-        const data: Record<string, string> = {};
+        const data: Record<string, string | boolean> = {};
         if (name !== undefined) data.name = name;
         if (title !== undefined) data.title = title;
         if (content !== undefined) data.content = content;
+        if (isFavourite !== undefined) data.isFavourite = isFavourite;
 
         if (Object.keys(data).length === 0) {
             return NextResponse.json({ error: "No fields to update" }, { status: 400 });
