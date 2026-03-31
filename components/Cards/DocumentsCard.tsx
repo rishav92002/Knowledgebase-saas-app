@@ -110,10 +110,7 @@ const DocumentCard = ({
               <h3 className="text-base font-semibold text-foreground truncate" title={name}>
                 {name}
               </h3>
-              <p className="text-xs text-muted truncate" title={title}>
-                {title}
-              </p>
-            </div>
+              </div>
           </div>
 
           {/* 3-dot menu */}
@@ -157,14 +154,6 @@ const DocumentCard = ({
             )}
           </div>
         </div>
-
-        {/* Content preview */}
-        {content && (
-          <p className="mt-3 text-sm text-muted leading-relaxed line-clamp-2">
-            {truncateContent(content, 120)}
-          </p>
-        )}
-
         {/* Footer */}
         <div className="mt-4 pt-3 border-t border-border-light flex items-center justify-between">
           <div className="flex items-center gap-3 text-xs text-muted-light">

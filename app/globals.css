@@ -143,3 +143,175 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Tiptap editor prose styles */
+.tiptap-editor .tiptap {
+  outline: none;
+  color: var(--foreground);
+  line-height: 1.75;
+}
+
+.tiptap-editor .tiptap > * + * {
+  margin-top: 0.75em;
+}
+
+.tiptap-editor .tiptap h1 {
+  font-size: 2em;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.tiptap-editor .tiptap h2 {
+  font-size: 1.5em;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-top: 1.25em;
+  margin-bottom: 0.4em;
+}
+
+.tiptap-editor .tiptap h3 {
+  font-size: 1.25em;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-top: 1em;
+  margin-bottom: 0.3em;
+}
+
+.tiptap-editor .tiptap p {
+  margin: 0;
+}
+
+.tiptap-editor .tiptap ul {
+  list-style-type: disc;
+  padding-left: 1.5em;
+}
+
+.tiptap-editor .tiptap ol {
+  list-style-type: decimal;
+  padding-left: 1.5em;
+}
+
+.tiptap-editor .tiptap li {
+  margin: 0.25em 0;
+}
+
+.tiptap-editor .tiptap li p {
+  margin: 0;
+}
+
+.tiptap-editor .tiptap blockquote {
+  border-left: 3px solid var(--primary);
+  padding-left: 1em;
+  margin-left: 0;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.tiptap-editor .tiptap pre {
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+  border-radius: 0.5em;
+  padding: 0.75em 1em;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.9em;
+  overflow-x: auto;
+}
+
+.tiptap-editor .tiptap pre code {
+  color: var(--foreground);
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+.tiptap-editor .tiptap code {
+  background: var(--surface-hover);
+  border-radius: 0.25em;
+  padding: 0.15em 0.4em;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.9em;
+  color: var(--primary);
+}
+
+.tiptap-editor .tiptap hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.5em 0;
+}
+
+.tiptap-editor .tiptap a,
+.tiptap-editor .tiptap .tiptap-link {
+  color: var(--primary);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.tiptap-editor .tiptap a:hover {
+  color: var(--primary-hover);
+}
+
+.tiptap-editor .tiptap mark {
+  background-color: #fef08a;
+  border-radius: 0.15em;
+  padding: 0.05em 0.15em;
+}
+
+.dark .tiptap-editor .tiptap mark {
+  background-color: #854d0e;
+  color: #fef9c3;
+}
+
+.tiptap-editor .tiptap ul[data-type="taskList"] {
+  list-style: none;
+  padding-left: 0;
+}
+
+.tiptap-editor .tiptap ul[data-type="taskList"] li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5em;
+}
+
+.tiptap-editor .tiptap ul[data-type="taskList"] li label {
+  display: flex;
+  align-items: center;
+  margin-top: 0.25em;
+}
+
+.tiptap-editor .tiptap ul[data-type="taskList"] li label input[type="checkbox"] {
+  width: 1em;
+  height: 1em;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.tiptap-editor .tiptap ul[data-type="taskList"] li div {
+  flex: 1;
+}
+
+.tiptap-editor .tiptap s {
+  text-decoration: line-through;
+}
+
+.tiptap-editor .tiptap u {
+  text-decoration: underline;
+}
+
+.tiptap-editor .tiptap strong {
+  font-weight: 700;
+}
+
+.tiptap-editor .tiptap em {
+  font-style: italic;
+}
+
+/* Placeholder styling */
+.tiptap-editor .tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--muted-light);
+  pointer-events: none;
+  height: 0;
+}
