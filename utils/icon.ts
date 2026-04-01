@@ -163,4 +163,10 @@ export const Icons = {
       '<circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/>',
       { ...defaultProps, strokeWidth: 0, ...p, }
     ),
+
+  upload: (p: IconProps = {}) =>
+    svg(
+      '<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>',
+      { ...defaultProps, ...p }
+    ),
 };

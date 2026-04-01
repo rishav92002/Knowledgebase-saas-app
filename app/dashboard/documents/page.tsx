@@ -2,7 +2,7 @@ import prisma from "@/lib/prisma";
 import { getAuth } from "@/lib/auth";
 import DocumentCard from "@/components/Cards/DocumentsCard";
 import CreateDocument from "@/components/CreateDocument/CreateDocument";
-
+import UploadDocument from "@/components/UploadDocument/UploadDocument";
 export default async function Documents() {
   const { decoded } = await getAuth();
 
@@ -36,6 +36,7 @@ export default async function Documents() {
     <div className="flex flex-col p-6 gap-8">
       <div className="flex justify-between items-center">
         <span className="font-semibold text-xl text-foreground">Your Documents</span>
+        <UploadDocument workspaces={workspacesData} />
         <CreateDocument workspaces={workspacesData} />
       </div>
 
