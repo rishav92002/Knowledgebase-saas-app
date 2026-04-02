@@ -30,7 +30,8 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
             maxAge: 5 * 60 * 60,
         });
         return response;
-    } catch {
+    } catch (e) {
+        console.error("Login error:", e);
         return NextResponse.json({error: "Internal server error"}, {status: 500});
     }
 };

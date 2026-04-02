@@ -25,7 +25,8 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
             }
         });
         return NextResponse.json({message: "User created successfully", user: {email: newUser.email, name: newUser.name}}, {status: 201});
-    } catch {
+    } catch (e) {
+        console.error("Signup error:", e);
         return NextResponse.json({error: "Internal server error"}, {status: 500});
     }
 };
