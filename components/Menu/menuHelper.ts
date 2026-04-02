@@ -22,11 +22,11 @@ export const MenuItems = [
         title: 'Documents',
         url: 'documents'
     },
-    {
-        icon: Icons?.recent,
-        title: 'Recent',
-        url: 'recent'
-    },
+    // {
+    //     icon: Icons?.recent,
+    //     title: 'Recent',
+    //     url: 'recent'
+    // },
     {
         icon: Icons?.favourite,
         title: 'Favourites',
