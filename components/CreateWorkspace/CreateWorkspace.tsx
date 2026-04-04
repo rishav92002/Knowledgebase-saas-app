@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Icons } from "@/utils/icon";
 import axios from "axios";
+import {useRouter} from "next/navigation";
 
 const CreateWorkspace = () => {
   const [workspaceName, setWorkspaceName] = useState<string>("");
@@ -10,16 +11,18 @@ const CreateWorkspace = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [workspaces, setWorkspaces]= useState(null)
   const [error, setError] = useState<string | null>(null);
-
+  const router = useRouter();
   const handleCreateWorkflow = async () => {
     try{
         setIsLoading(true);
         const workspace = await axios.post('/api/workflow',{name:workspaceName})
         setIsOpen(false)
         setIsLoading(false);
-        
+        router.refresh();
     }catch(error){
         setError('Failed to create workflow!')
+        setIsLoading(false);
+    }finally{
         setIsLoading(false);
     }
   };
