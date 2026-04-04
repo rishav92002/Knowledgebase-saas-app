@@ -19,7 +19,7 @@ const TopBar = ({ userData }: TopBarProps) => {
   const pathname = usePathname();       // e.g. "/dashboard/documents"
   const searchParams = useSearchParams();
   const router = useRouter();
-  console.log("Current pathname:", pathname, searchParams);
+  const showSearch = pathname !== "/dashboard";
 
   function getNameShortForm() {
     if (!userData.name) return "";
@@ -43,16 +43,20 @@ const TopBar = ({ userData }: TopBarProps) => {
   },[searchVal])
   return (
     <div className="h-14 shrink-0 flex justify-between items-center px-4 bg-topbar-bg border-b border-topbar-border w-full">
-      <div className="flex items-center gap-2 bg-input-bg border border-input-border rounded-lg px-3 py-2 w-80">
-        <div className="text-muted-light">{Icons.search({ size: 18 })}</div>
-        <input
-          type="text"
-          placeholder="Search documents..."
-          value={searchVal}
-          onChange={(e) => setSearchVal(e.target.value)}
-          className="bg-transparent outline-none text-sm text-input-text placeholder-input-placeholder w-full"
-        />
-      </div>
+      {showSearch ? (
+        <div className="flex items-center gap-2 bg-input-bg border border-input-border rounded-lg px-3 py-2 w-80">
+          <div className="text-muted-light">{Icons.search({ size: 18 })}</div>
+          <input
+            type="text"
+            placeholder="Search documents..."
+            value={searchVal}
+            onChange={(e) => setSearchVal(e.target.value)}
+            className="bg-transparent outline-none text-sm text-input-text placeholder-input-placeholder w-full"
+          />
+        </div>
+      ) : (
+        <div />
+      )}
       <div className="flex items-center gap-3">
         <div className="relative group">
           <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-text text-sm font-medium cursor-pointer">
