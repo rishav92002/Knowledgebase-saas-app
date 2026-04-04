@@ -19,7 +19,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         { status: 400 },
       );
     }
-
+    
     const newWorkspace = await prisma.workspace.create({
       data: { name, userId },
     });

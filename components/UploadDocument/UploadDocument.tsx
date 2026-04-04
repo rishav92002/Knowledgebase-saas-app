@@ -12,9 +12,10 @@ interface Workspace {
 
 interface UploadDocumentProps {
   workspaces: Workspace[];
+  onCreated?: () => void;
 }
 
-const UploadDocument = ({ workspaces }: UploadDocumentProps) => {
+const UploadDocument = ({ workspaces, onCreated }: UploadDocumentProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedWorkspaceName, setSelectedWorkspaceName] = useState("");
@@ -78,7 +79,11 @@ const UploadDocument = ({ workspaces }: UploadDocumentProps) => {
       await axios.post("/api/document/upload", payload);
       setIsOpen(false);
       resetForm();
-      router.refresh();
+      if (onCreated) {
+        onCreated();
+      } else {
+        router.refresh();
+      }
     } catch(error: any) {
         console.error("Upload error:", error);
       setError("Failed to upload document");

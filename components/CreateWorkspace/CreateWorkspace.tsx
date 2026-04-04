@@ -5,25 +5,32 @@ import { Icons } from "@/utils/icon";
 import axios from "axios";
 import {useRouter} from "next/navigation";
 
-const CreateWorkspace = () => {
+interface CreateWorkspaceProps {
+  onCreated?: () => void;
+}
+
+const CreateWorkspace = ({ onCreated }: CreateWorkspaceProps) => {
   const [workspaceName, setWorkspaceName] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [workspaces, setWorkspaces]= useState(null)
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+
   const handleCreateWorkflow = async () => {
-    try{
-        setIsLoading(true);
-        const workspace = await axios.post('/api/workflow',{name:workspaceName})
-        setIsOpen(false)
-        setIsLoading(false);
+    try {
+      setIsLoading(true);
+      await axios.post("/api/workflow", { name: workspaceName });
+      setIsOpen(false);
+      setWorkspaceName("");
+      if (onCreated) {
+        onCreated();
+      } else {
         router.refresh();
-    }catch(error){
-        setError('Failed to create workflow!')
-        setIsLoading(false);
-    }finally{
-        setIsLoading(false);
+      }
+    } catch {
+      setError("Failed to create workspace!");
+    } finally {
+      setIsLoading(false);
     }
   };
 

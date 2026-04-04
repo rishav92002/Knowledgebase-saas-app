@@ -13,9 +13,10 @@ interface Workspace {
 interface CreateDocumentProps {
   workspaces: Workspace[];
   preselectedWorkspaceId?: string;
+  onCreated?: () => void;
 }
 
-const CreateDocument = ({ workspaces, preselectedWorkspaceId }: CreateDocumentProps) => {
+const CreateDocument = ({ workspaces, preselectedWorkspaceId, onCreated }: CreateDocumentProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [docName, setDocName] = useState("");
   const [docTitle, setDocTitle] = useState("");     
@@ -63,7 +64,11 @@ const CreateDocument = ({ workspaces, preselectedWorkspaceId }: CreateDocumentPr
       await axios.post("/api/document", body);
       setIsOpen(false);
       resetForm();
-      router.refresh();
+      if (onCreated) {
+        onCreated();
+      } else {
+        router.refresh();
+      }
     } catch {
       setError("Failed to create document");
     } finally {

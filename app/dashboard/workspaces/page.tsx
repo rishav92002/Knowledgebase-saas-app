@@ -1,7 +1,6 @@
 import prisma from "@/lib/prisma";
 import { getAuth } from "@/lib/auth";
-import CreateWorkspace from "@/components/CreateWorkspace/CreateWorkspace";
-import WorkspacesCard from "@/components/Cards/WorkspacesCard";
+import WorkspacesContent from "@/components/WorkspacesContent/WorkspacesContent";
 
 export default async function Workspaces() {
   const { decoded } = await getAuth();
@@ -18,25 +17,12 @@ export default async function Workspaces() {
     },
   });
 
-  return (
-    <div className="flex flex-col p-4 gap-12">
-      <div className="flex justify-between ">
-        <span className="font-semibold text-xl">Your Workspaces</span>
-        <CreateWorkspace />
-      </div>
-      <div className="flex gap-8 ">
-        {workspaces.map((val, i) => {
-          return (
-            <WorkspacesCard
-              key={val.id}
-              id={val.id}
-              name={val.name}
-              updatedAt={val.updatedAt}
-              documentCount={val._count.documents}
-            />
-          );
-        })}
-      </div>
-    </div>
-  );
+  const formatted = workspaces.map((ws) => ({
+    id: ws.id,
+    name: ws.name,
+    updatedAt: ws.updatedAt,
+    documentCount: ws._count.documents,
+  }));
+
+  return <WorkspacesContent workspaces={formatted} />;
 }
