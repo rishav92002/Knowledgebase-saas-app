@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Icons } from "@/utils/icon";
 import { useTheme } from "@/context/ThemeContext";
+import { usePathname,useRouter,useSearchParams } from "next/navigation";
 
 interface TopBarProps {
   userData: {
@@ -14,6 +15,11 @@ interface TopBarProps {
 
 const TopBar = ({ userData }: TopBarProps) => {
   const { theme, toggleTheme } = useTheme();
+  const [searchVal, setSearchVal] = useState("");
+  const pathname = usePathname();       // e.g. "/dashboard/documents"
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  console.log("Current pathname:", pathname, searchParams);
 
   function getNameShortForm() {
     if (!userData.name) return "";
@@ -22,7 +28,19 @@ const TopBar = ({ userData }: TopBarProps) => {
     const last = parts.length > 1 ? parts[parts.length - 1][0] : "";
     return (first + last).toUpperCase();
   }
+  useEffect(()=>{
+    const timeOutid = setTimeout(()=>{
+      const params = new URLSearchParams(searchParams.toString());
+      if (searchVal) {
+      params.set("q", searchVal);
+      } else {
+        params.delete("q");
+      }
+      router.replace(`${pathname}?${params.toString()}`);
 
+    },500);
+    return () => clearTimeout(timeOutid);
+  },[searchVal])
   return (
     <div className="h-14 shrink-0 flex justify-between items-center px-4 bg-topbar-bg border-b border-topbar-border w-full">
       <div className="flex items-center gap-2 bg-input-bg border border-input-border rounded-lg px-3 py-2 w-80">
@@ -30,6 +48,8 @@ const TopBar = ({ userData }: TopBarProps) => {
         <input
           type="text"
           placeholder="Search documents..."
+          value={searchVal}
+          onChange={(e) => setSearchVal(e.target.value)}
           className="bg-transparent outline-none text-sm text-input-text placeholder-input-placeholder w-full"
         />
       </div>

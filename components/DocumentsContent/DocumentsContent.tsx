@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useTransition } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useTransition } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import DocumentCard from "@/components/Cards/DocumentsCard";
 import CreateDocument from "@/components/CreateDocument/CreateDocument";
 import UploadDocument from "@/components/UploadDocument/UploadDocument";
@@ -50,6 +50,14 @@ function DocumentSkeleton() {
 const DocumentsContent = ({ documents, workspaces }: DocumentsContentProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [filteredDocuments, setFilteredDocuments] = useState(documents);
+  const searchParams = useSearchParams();
+  const query = searchParams.get("q") || "";
+  
+  const filtered = documents.filter((doc) => {
+    const searchStr = `${doc.name}${doc.workspaceName}`.toLowerCase();
+    return searchStr.includes(query.toLowerCase());
+  });
 
   const handleRefresh = () => {
     startTransition(() => {
@@ -67,14 +75,14 @@ const DocumentsContent = ({ documents, workspaces }: DocumentsContentProps) => {
         </div>
       </div>
 
-      {documents.length === 0 && !isPending ? (
+      {filtered.length === 0 && !isPending ? (
         <div className="flex flex-col items-center justify-center py-20 text-muted">
-          <p className="text-lg font-medium">No documents yet</p>
+          <p className="text-lg font-medium">No documents Found</p>
           <p className="text-sm mt-1">Create your first document to get started</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-          {documents.map((doc) => (
+          {filtered.map((doc) => (
             <DocumentCard
               key={doc.id}
               id={doc.id}

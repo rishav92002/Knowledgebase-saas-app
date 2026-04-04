@@ -31,7 +31,6 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         });
         return response;
     } catch (e) {
-        console.error("Login error:", e);
         return NextResponse.json({error: "Internal server error"}, {status: 500});
     }
 };

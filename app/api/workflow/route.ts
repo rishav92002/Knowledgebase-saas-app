@@ -29,7 +29,6 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
       { status: 201 },
     );
   } catch (e) {
-    console.error("Create workspace error:", e);
     return NextResponse.json(
       { error: "Failed to create workspace" },
       { status: 500 },
@@ -67,7 +66,6 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
 
     return NextResponse.json({ workspace }, { status: 200 });
   } catch (e) {
-    console.error("Fetch workspace error:", e);
     return NextResponse.json(
       { error: "Failed to fetch workspace" },
       { status: 500 },
@@ -109,7 +107,6 @@ export const DELETE = async (req: NextRequest): Promise<NextResponse> => {
 
     return NextResponse.json({ message: "Workspace deleted" }, { status: 200 });
   } catch (e) {
-    console.error("Delete workspace error:", e);
     return NextResponse.json(
       { error: "Failed to delete workspace" },
       { status: 500 },
@@ -161,7 +158,6 @@ export const PATCH = async (req: NextRequest): Promise<NextResponse> => {
 
     return NextResponse.json({ workspace: updatedWorkspace }, { status: 200 });
   } catch (e) {
-    console.error("Update workspace error:", e);
     return NextResponse.json(
       { error: "Failed to update workspace" },
       { status: 500 },

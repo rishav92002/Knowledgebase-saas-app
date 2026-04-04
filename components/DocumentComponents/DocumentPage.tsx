@@ -39,7 +39,6 @@ const DocumentPage = ({ documentData }: DocumentPageProps) => {
       await axios.patch("/api/document", payload, { headers: { documentId: documentData.id } });
       setSavingStatus("saved");
     }catch(error){
-      console.error("Error saving document:", error);
       setSavingStatus("error saving");
     }
   }, 2000);

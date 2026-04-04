@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import CreateWorkspace from "@/components/CreateWorkspace/CreateWorkspace";
 import WorkspacesCard from "@/components/Cards/WorkspacesCard";
 
@@ -35,6 +35,13 @@ function WorkspaceSkeleton() {
 const WorkspacesContent = ({ workspaces }: WorkspacesContentProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const searchParams = useSearchParams();
+  const query = searchParams.get("q") || "";
+  
+  const filtered = workspaces.filter((ws) => {
+    const searchStr = `${ws.name}`.toLowerCase();
+    return searchStr.includes(query.toLowerCase());
+  });
 
   const handleRefresh = () => {
     startTransition(() => {
@@ -49,7 +56,7 @@ const WorkspacesContent = ({ workspaces }: WorkspacesContentProps) => {
         <CreateWorkspace onCreated={handleRefresh} />
       </div>
 
-      {workspaces.length === 0 && !isPending ? (
+      {filtered.length === 0 && !isPending ? (
         <div className="flex flex-col items-center justify-center py-20 text-muted">
           <div className="w-14 h-14 rounded-full bg-muted-light/20 flex items-center justify-center mb-4">
             <svg
@@ -70,12 +77,12 @@ const WorkspacesContent = ({ workspaces }: WorkspacesContentProps) => {
               <rect x="3" y="14" width="7" height="7" />
             </svg>
           </div>
-          <p className="text-lg font-medium">No workspaces yet</p>
+          <p className="text-lg font-medium">No workspaces found</p>
           <p className="text-sm mt-1">Create a workspace to see it here</p>
         </div>
       ) : (
         <div className="flex gap-8 flex-wrap">
-          {workspaces.map((ws) => (
+          {filtered.map((ws) => (
             <WorkspacesCard
               key={ws.id}
               id={ws.id}

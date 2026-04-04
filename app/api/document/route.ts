@@ -40,7 +40,6 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
                 { status: 409 },
             );
         }
-        console.error("Create document error:", e);
         return NextResponse.json({ error: "Failed to create document" }, { status: 500 });
 
     }
@@ -68,7 +67,6 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
 
         return NextResponse.json(document, { status: 200 });
     } catch (e) {
-        console.error("Fetch document error:", e);
         return NextResponse.json({ error: e instanceof Error ? e.message : "Failed to fetch document" }, { status: 500 });
     }
 };
@@ -99,7 +97,6 @@ export const DELETE = async (req: NextRequest): Promise<NextResponse> => {
 
         return NextResponse.json({ message: "Document deleted" }, { status: 200 });
     } catch (e) {
-        console.error("Delete document error:", e);
         return NextResponse.json({ error: "Failed to delete document" }, { status: 500 });
     }
 };
@@ -144,7 +141,6 @@ export const PATCH = async (req: NextRequest): Promise<NextResponse> => {
 
         return NextResponse.json(document, { status: 200 });
     } catch (e) {
-        console.error("Update document error:", e);
         return NextResponse.json({ error: "Failed to update document" }, { status: 500 });
     }
 };

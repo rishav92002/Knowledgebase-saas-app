@@ -85,7 +85,6 @@ const UploadDocument = ({ workspaces, onCreated }: UploadDocumentProps) => {
         router.refresh();
       }
     } catch(error: any) {
-        console.error("Upload error:", error);
       setError("Failed to upload document");
     } finally {
       setIsUploading(false);

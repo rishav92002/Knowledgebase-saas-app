@@ -4,9 +4,16 @@ import DocumentCard from "@/components/Cards/DocumentsCard";
 import { getAuth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
-async function Page({ params }: { params: Promise<{ workspace: string }> }) {
+async function Page({ 
+  params, 
+  searchParams 
+}: { 
+  params: Promise<{ workspace: string }>;
+  searchParams: Promise<{ q?: string }>;
+}) {
   const { workspace } = await params;
   const { decoded } = await getAuth();
+  const { q } = await searchParams;
 
   const workspaceData = await prisma.workspace.findMany({
     select: {
@@ -18,7 +25,10 @@ async function Page({ params }: { params: Promise<{ workspace: string }> }) {
   });
 
   const selectedWorkspace = workspaceData.find((ws) => ws.id === workspace);
-
+  const filteredDocuments = selectedWorkspace?.documents.filter((doc) => {
+    const searchStr = `${doc.name}`.toLowerCase();
+    return searchStr.includes((q || "").toLowerCase());
+  }) || [];
   if (!selectedWorkspace) {
     redirect("/dashboard/workspaces");
   }
@@ -35,7 +45,7 @@ async function Page({ params }: { params: Promise<{ workspace: string }> }) {
         />
       </div>
 
-      {selectedWorkspace.documents.length === 0 ? (
+      {filteredDocuments.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-muted">
           <div className="w-14 h-14 rounded-full bg-muted-light/20 flex items-center justify-center mb-4">
             <svg
@@ -60,7 +70,7 @@ async function Page({ params }: { params: Promise<{ workspace: string }> }) {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-          {selectedWorkspace.documents.map((document) => (
+          {filteredDocuments.map((document) => (
             <DocumentCard
               key={document.id}
               id={document.id}

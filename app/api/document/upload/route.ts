@@ -73,7 +73,6 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
 
     return NextResponse.json(workspace, { status: 201 });
   } catch (e) {
-    console.error("Upload error:", e);
     const message = e instanceof Error ? e.message : "Failed to upload document";
     return NextResponse.json({ error: message }, { status: 500 });
   }

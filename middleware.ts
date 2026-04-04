@@ -6,7 +6,6 @@ import { verifyToken } from "@/utils/token";
 const authMiddleware = async (req: NextRequest): Promise<NextResponse> => {
     try {
         const token = req.cookies.get("token")?.value;
-        console.log("Auth Middleware: Checking token", { token });
         if (!token) {
             return NextResponse.redirect(new URL("/login", req.url));
         }

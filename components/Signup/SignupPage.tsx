@@ -24,7 +24,6 @@ export default function SignupPage(): JSX.Element {
   const handleSignup = async (): Promise<void> => {
     try{
       const isInputValid = validateForm();
-      console.log(' isInputValid', isInputValid.length);
       if(isInputValid.length>0){
         setError({error: true, message: isInputValid});
         return;

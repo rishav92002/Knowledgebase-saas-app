@@ -30,7 +30,7 @@ export default async function Documents() {
       },
     }),
   ]);
-
+  
   const formatted = documentsData.map((doc) => ({
     id: doc.id,
     name: doc.name,
