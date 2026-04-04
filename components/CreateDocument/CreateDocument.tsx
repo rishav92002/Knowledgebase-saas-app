@@ -69,8 +69,12 @@ const CreateDocument = ({ workspaces, preselectedWorkspaceId, onCreated }: Creat
       } else {
         router.refresh();
       }
-    } catch {
-      setError("Failed to create document");
+    } catch(err:unknown) {
+          if (axios.isAxiosError(err) && err.response?.data?.error) {
+          setError(err.response.data.error);
+      } else {
+          setError("Failed to create document");
+      }
     } finally {
       setIsLoading(false);
     }

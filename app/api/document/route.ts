@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { Prisma } from "@/app/generated/prisma/client";
 
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
     try {
@@ -15,7 +16,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         }
 
         const workspace = await prisma.workspace.upsert({
-            where: { name: workspaceName },
+            where: { name_userId: { name: workspaceName, userId } },
             update: {
                 documents: {
                     create: { name, title, content },
@@ -33,8 +34,15 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
 
         return NextResponse.json(workspace, { status: 201 });
     } catch (e) {
+        if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2002") {
+            return NextResponse.json(
+                { error: "A document with this name already exists in this workspace" },
+                { status: 409 },
+            );
+        }
         console.error("Create document error:", e);
         return NextResponse.json({ error: "Failed to create document" }, { status: 500 });
+
     }
 };
 
@@ -61,7 +69,7 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
         return NextResponse.json(document, { status: 200 });
     } catch (e) {
         console.error("Fetch document error:", e);
-        return NextResponse.json({ error: "Failed to fetch document" }, { status: 500 });
+        return NextResponse.json({ error: e instanceof Error ? e.message : "Failed to fetch document" }, { status: 500 });
     }
 };
 

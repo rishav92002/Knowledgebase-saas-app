@@ -55,7 +55,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
     const docName = file.name.slice(0, file.name.lastIndexOf(".")) || file.name;
 
     const workspace = await prisma.workspace.upsert({
-      where: { name: workspacename },
+      where: { name_userId: { name: workspacename, userId } },
       update: {
         documents: {
           create: { name: docName, title: file.name, content: htmlContent },
