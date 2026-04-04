@@ -6,11 +6,18 @@ import { MenuItems } from "./menuHelper";
 import { usePathname } from "next/navigation";
 import { Icons } from "@/utils/icon";
 import { useTheme } from "@/context/ThemeContext";
+import UserSettings from "../UserSettings/UserSettings";
 
-import Settings from "../Settings/Settings";
+interface MenuProps {
+  user:{
+    id: string;
+    name: string | null;
+    email: string;
+  }
+}
 
-const Menu = () => {
-  const [showSettings, setShowSettings] = useState(false);
+const Menu = ({ user }: MenuProps) => {
+  const [showSettings, setShowSettings] = useState(true);
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
 
@@ -21,6 +28,8 @@ const Menu = () => {
   }
 
   return (
+    <>
+    {showSettings && <UserSettings onClose={() => setShowSettings(false)} userData={user}/>}
     <div className="flex flex-col justify-between h-full">
       <div className="flex flex-col gap-6">
         <Link
@@ -56,7 +65,6 @@ const Menu = () => {
 
       <div className="flex flex-col gap-1 pb-2">
         <div className="relative">
-          {showSettings && <Settings />}
           <div
             className="flex gap-3 items-center cursor-pointer px-3 py-2 rounded-lg text-sidebar-text hover:bg-sidebar-hover transition-colors"
             onClick={() => setShowSettings((prev) => !prev)}
@@ -80,6 +88,7 @@ const Menu = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
