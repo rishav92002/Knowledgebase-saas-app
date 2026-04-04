@@ -5,6 +5,7 @@ import DocumentsContent from "@/components/DocumentsContent/DocumentsContent";
 export default async function Documents() {
   const { decoded } = await getAuth();
 
+  
   const [documentsData, workspacesData] = await Promise.all([
     prisma.document.findMany({
       where: { workspace: { userId: decoded.userId } },
