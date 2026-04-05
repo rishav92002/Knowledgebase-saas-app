@@ -5,6 +5,8 @@ import { JSX, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
+import ForgotPassword from "../ForgotPassword/ForgotPassword";
+
 interface LoginError {
   error: boolean;
   message: string;
@@ -15,6 +17,7 @@ export default function LoginPage(): JSX.Element {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [error, setError] = useState<LoginError | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showForgotPassword, setShowForgotPassword] = useState<boolean>(false);
   const router = useRouter();
 
   const handleLogin = async (): Promise<void> => {
@@ -35,10 +38,6 @@ export default function LoginPage(): JSX.Element {
     }
   };
 
-
-  const handleForgotPassword = (): void => {
-    // TODO: Implement forgot password logic
-  };
 
   return (
     <div className="flex min-h-screen">
@@ -113,12 +112,14 @@ export default function LoginPage(): JSX.Element {
           </div>
 
           {/* Header */}
-          <div className="space-y-2">
-            <h2 className="text-3xl font-bold text-gray-900">Welcome back</h2>
-            <p className="text-gray-500">
-              Sign in to access your personal knowledge base
-            </p>
-          </div>
+          {!showForgotPassword && (
+            <div className="space-y-2">
+              <h2 className="text-3xl font-bold text-gray-900">Welcome back</h2>
+              <p className="text-gray-500">
+                Sign in to access your personal knowledge base
+              </p>
+            </div>
+          )}
 
           {/* Error Alert */}
           {error && (
@@ -150,12 +151,13 @@ export default function LoginPage(): JSX.Element {
           )}
 
           {/* Form */}
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleLogin();
-            }}
-            className="space-y-5"
+          {!showForgotPassword && (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleLogin();
+              }}
+                className="space-y-5"
           >
             {/* Email */}
             <div className="space-y-2">
@@ -186,7 +188,7 @@ export default function LoginPage(): JSX.Element {
                 </label>
                 {/* <button
                   type="button"
-                  onClick={handleForgotPassword}
+                  onClick={() => setShowForgotPassword(true)}
                   className="text-sm text-[#2b6cee] hover:underline"
                 >
                   Forgot password?
@@ -287,8 +289,10 @@ export default function LoginPage(): JSX.Element {
                 "Sign in"
               )}
             </button>
-          </form>
-
+          </form>)}
+           {showForgotPassword && (
+            <ForgotPassword />
+           )  }   
           {/* Divider */}
           {/* <div className="relative">
             <div className="absolute inset-0 flex items-center">
